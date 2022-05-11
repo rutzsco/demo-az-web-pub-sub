@@ -8,10 +8,10 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-latest'
-  rootDirectory: 'Services/Demo.Publisher'
-
+  
 variables:
   buildConfiguration: 'Release'
+  rootDirectory: 'Services/Demo.Publisher'
 
 steps:
 
