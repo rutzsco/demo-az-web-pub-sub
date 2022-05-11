@@ -22,4 +22,5 @@ stages:
     functionAppStorageName: 'rutzscoazfwpsp'
     packageName: 'Demo.Publisher.zip'
     templateFile: '$(Pipeline.Workspace)/build/Infrastructure/main.bicep'
+    WebPubSubConnectionString: ${{ variables.WebPubSubConnectionString }}
 
