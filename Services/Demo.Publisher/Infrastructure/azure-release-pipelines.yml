@@ -20,4 +20,4 @@ stages:
     region: ${{ variables.region }}
     functionAppName: 'rutzsco-web-pubsub-publisher'
     functionAppStorageName: 'rutzscoazfwpsp'
-    packageName: 'App.zip'
+    packageName: 'Demo.Publisher.zip'
