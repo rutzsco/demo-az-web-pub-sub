@@ -1,0 +1,23 @@
+trigger: none
+
+resources:
+  pipelines:
+  - pipeline: build
+    source: 'WebPubSub - BUILD'
+  
+variables:
+  vmImageName: 'ubuntu-latest'
+  azureSubscription: 'Demo Account'
+  region: 'eastus'
+
+stages:
+- template: azure-release-pipelines-stage-template.yml
+  parameters:
+    stageName: 'CI'
+    environment: 'API'
+    azureSubscription: ${{ variables.azureSubscription }}
+    resourceGroupName: 'rutzsco-web-pubsub'
+    region: ${{ variables.region }}
+    functionAppName: 'rutzsco-web-pubsub-publisher'
+    functionAppStorageName: 'rutzscoazfwpsp'
+    packageName: 'App.zip'
