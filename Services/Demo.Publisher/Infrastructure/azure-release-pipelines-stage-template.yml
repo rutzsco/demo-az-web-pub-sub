@@ -41,7 +41,7 @@ stages:
                 scriptLocation: inlineScript
                 inlineScript: |
                   az group create --name ${{ parameters.resourceGroupName }} --location ${{ parameters.region }} 
-                  az deployment group create --resource-group ${{ parameters.resourceGroupName }} --template-file ${{ parameters.templateFile }} --parameters functionAppName=${{ parameters.functionAppName }} functionAppStorageName=${{ parameters.functionAppStorageName }} > outputs.json
+                  az deployment group create --resource-group ${{ parameters.resourceGroupName }} --template-file ${{ parameters.templateFile }} --parameters functionAppName=${{ parameters.functionAppName }} functionAppStorageAccountName=${{ parameters.functionAppStorageName }} > outputs.json
 
             - task: AzureFunctionApp@1
               displayName: 'Azure functions app deploy'
