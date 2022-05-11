@@ -21,3 +21,5 @@ stages:
     functionAppName: 'rutzsco-web-pubsub-publisher'
     functionAppStorageName: 'rutzscoazfwpsp'
     packageName: 'Demo.Publisher.zip'
+    templateFile: '$(Pipeline.Workspace)/build/Infrastructure/main.bicep'
+
