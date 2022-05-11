@@ -8,15 +8,30 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-latest'
-  
+
 variables:
   buildConfiguration: 'Release'
   rootDirectory: 'Services/Demo.Publisher'
 
 steps:
-
-- task: PublishPipelineArtifact@1
+- task: DotNetCoreCLI@2
+  displayName: 'Build project'
   inputs:
-    targetPath: '$(rootDirectory)/Infrastructure'
-    artifact: 'Infrastructure'
-    publishLocation: 'pipeline'
+    projects: '$(rootDirectory)/**/*.csproj'
+    arguments: '--output publish_output --configuration Release'
+- task: DotNetCoreCLI@2
+  displayName: 'Publish project'
+  inputs:
+    command: publish
+    publishWebProjects: false
+    projects: '$(rootDirectory)/**/*.csproj'
+    arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: App'
+  inputs:
+    ArtifactName: App
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: Infrastructure'
+  inputs:
+    PathtoPublish: '$(rootDirectory)/Infrastructure'
+    ArtifactName: Infrastructure
