@@ -16,6 +16,8 @@ parameters:
 - name: packageName
   default: ''  
 - name: templateFile
+  default: ''
+- name: webPubSubConnectionString
   default: ''  
 
 stages:
@@ -50,4 +52,4 @@ stages:
                 appType: functionApp
                 appName: ${{ parameters.functionAppName }}
                 package: '$(Pipeline.Workspace)/build/App/${{ parameters.packageName }}'
-                AppSettings: '-TBD TBD'
+                AppSettings: '-WebPubSubConnectionString "${{ parameters.webPubSubConnectionString }"'
