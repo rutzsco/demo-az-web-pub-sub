@@ -42,3 +42,12 @@ stages:
                 inlineScript: |
                 az group create --name ${{ parameters.resourceGroupName }} --location ${{ parameters.region }} 
                 az deployment group create --resource-group ${{ parameters.resourceGroupName }} --template-file ${{ parameters.templateFile }} --parameters functionAppName=${{ parameters.functionAppName }} functionAppStorageName=${{ parameters.functionAppStorageName }} > outputs.json
+
+            - task: AzureFunctionApp@1
+              displayName: 'Azure functions app deploy'
+              inputs:
+                azureSubscription: ${{ parameters.azureSubscription }}
+                appType: functionApp
+                appName: ${{ parameters.functionAppName }}
+                package: '$(Pipeline.Workspace)/build/App/${{ parameters.packageName }}'
+                AppSettings: '-TBD TBD'
