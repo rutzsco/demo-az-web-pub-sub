@@ -1,0 +1,10 @@
+@baseUrl = https://rutzsco-web-pubsub-publisher.azurewebsites.net/api
+### Sent Aynsc Request
+# @name startWorkRequest
+
+POST {{baseUrl}}/PublishEndpoint
+content-type: application/json
+
+{
+
+}

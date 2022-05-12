@@ -15,10 +15,11 @@ namespace Demo.Publisher
     public static class PublishEndpoint
     {
         [FunctionName("PublishEndpoint")]
-        public static async Task RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest req,
+        public static async Task<IActionResult> RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest req,
                                           [WebPubSub(Hub = "DemoHub")] IAsyncCollector<WebPubSubAction> actions)
         {
             await actions.AddAsync(WebPubSubAction.CreateSendToAllAction("Hello Web PubSub!", WebPubSubDataType.Text));
+            return new OkObjectResult("OK");
         }
     }
 }
