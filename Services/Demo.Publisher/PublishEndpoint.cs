@@ -6,9 +6,9 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Microsoft.Azure.WebJobs.Extensions.WebPubSub;
 using Microsoft.Azure.WebPubSub.Common;
+using System.Text.Json;
 
 namespace Demo.Publisher
 {
@@ -16,9 +16,12 @@ namespace Demo.Publisher
     {
         [FunctionName("PublishEndpoint")]
         public static async Task<IActionResult> RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest req,
-                                          [WebPubSub(Hub = "DemoHub")] IAsyncCollector<WebPubSubAction> actions)
+                                                         [WebPubSub(Hub = "DemoHub")] IAsyncCollector<WebPubSubAction> actions)
         {
-            await actions.AddAsync(WebPubSubAction.CreateSendToAllAction("Hello Web PubSub!", WebPubSubDataType.Text));
+            var pce = new ProcessCompletedEvent() { Id = Guid.NewGuid(), ProcessId = Guid.NewGuid() };
+            var jsonString = JsonSerializer.Serialize(pce);
+            var action = WebPubSubAction.CreateSendToAllAction(jsonString, WebPubSubDataType.Json);
+            await actions.AddAsync(action);
             return new OkObjectResult("OK");
         }
     }
