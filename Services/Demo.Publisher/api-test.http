@@ -6,5 +6,6 @@ POST {{baseUrl}}/PublishEndpoint
 content-type: application/json
 
 {
-
+"ProcessId": "4d502dd6-d5e0-11ec-9d64-0242ac120002",
+"ClientId": "Device002"
 }

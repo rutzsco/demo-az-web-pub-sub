@@ -16,10 +16,11 @@ namespace Demo.Subscriber
             }
             var connectionString = args[0];
             var hub = args[1];
+            var clientId = Console.ReadLine();
 
-            // Either generate the URL or fetch it from server or fetch a temp one from the portal
             var serviceClient = new WebPubSubServiceClient(connectionString, hub);
-            var url = serviceClient.GetClientAccessUri();
+            var url = serviceClient.GetClientAccessUri(userId: clientId);
+
 
             using (var client = new WebsocketClient(url))
             {
@@ -27,7 +28,7 @@ namespace Demo.Subscriber
                 client.ReconnectTimeout = null;
                 client.MessageReceived.Subscribe(msg => ProcessEvent(msg));
                 await client.Start();
-                Console.WriteLine("Connected.");
+                Console.WriteLine($"Connected. {client.Name}");
                 Console.Read();
             }
         }
