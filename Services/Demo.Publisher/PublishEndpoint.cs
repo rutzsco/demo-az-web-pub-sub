@@ -18,10 +18,14 @@ namespace Demo.Publisher
         public static async Task<IActionResult> RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest req,
                                                          [WebPubSub(Hub = "DemoHub")] IAsyncCollector<WebPubSubAction> actions)
         {
-            var pce = new ProcessCompletedEvent() { Id = Guid.NewGuid(), ProcessId = Guid.NewGuid() };
+            var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            var request = JsonSerializer.Deserialize<ProcessCompletedEventSummary>(requestBody);
+            var pce = new ProcessCompletedEvent() { Id = Guid.NewGuid(), ProcessId = request.ProcessId, ClientId = request.ClientId, Timestamp = DateTime.UtcNow };
             var jsonString = JsonSerializer.Serialize(pce);
-            var action = WebPubSubAction.CreateSendToAllAction(jsonString, WebPubSubDataType.Json);
-            await actions.AddAsync(action);
+            //var action = WebPubSubAction.CreateSendToAllAction(jsonString, WebPubSubDataType.Json);
+
+            var actionUser = WebPubSubAction.CreateSendToUserAction(pce.ClientId, jsonString, WebPubSubDataType.Json);
+            await actions.AddAsync(actionUser);
             return new OkObjectResult("OK");
         }
     }
