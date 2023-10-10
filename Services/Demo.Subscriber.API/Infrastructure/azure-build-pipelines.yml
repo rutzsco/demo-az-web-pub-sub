@@ -8,7 +8,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  dockerRegistryServiceConnection: '69afecc5-ac14-478c-af6c-0c1fd1a6e437'
+  dockerRegistryServiceConnection: '35174a8f-edaa-4891-891d-f017c5338f2c'
   imageRepository: 'demo/subscriber-api'
   dockerfilePath: '$(Build.SourcesDirectory)/Services/Demo.Subscriber.API/Dockerfile'
   tag: '$(Build.BuildNumber)'
