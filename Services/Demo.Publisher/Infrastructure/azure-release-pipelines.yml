@@ -19,7 +19,7 @@ stages:
     resourceGroupName: 'rutzsco-web-pubsub'
     region: ${{ variables.region }}
     functionAppName: 'rutzsco-web-pubsub-publisher'
-    functionAppStorageName: 'rutzscoazfwpsp'
+    functionAppStorageName: 'rutzscoazfwpspp'
     packageName: 'Demo.Publisher.zip'
     templateFile: '$(Pipeline.Workspace)/build/Infrastructure/main.bicep'
     webPubSubConnectionString: $(WebPubSubConnectionString)
